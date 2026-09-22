@@ -8,18 +8,31 @@ int main(int argc, char *argv[]) {
   // Flush after every printf
   setbuf(stdout, NULL);
 
-  char command[MAX_SIZE];
+  char input[MAX_SIZE];
   while(1)
   {
     printf("$ ");
   
-    fgets(command, sizeof(command), stdin);
-    command[strcspn(command, "\n")] = '\0';
+    fgets(input, sizeof(input), stdin);
+    input[strcspn(input, "\n")] = '\0';
+    int length = sizeof(input)/sizeof(input[0]);
+    char command[1024];
 
-    if (strcmp(command, "exit") == 0){
+    for(int i = 0; i < length; i++){
+      if(isspace((unsigned char)input[i])){
+        command[i] = '\0';
+        break;
+      }
+      command[i] = input[i];
+    }
+    if (strcmp(input, "exit") == 0){
       break;
     }
-    printf("%s: command not found\n", command);
+    if (strcmp(command, "echo") == 0){
+      char *text = strchr(input, ' ');
+      printf("%s\n", *(text + 1));
+    }
+    printf("%s: input not found\n", input);
   }
 
   return 0;
