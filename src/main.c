@@ -10,14 +10,17 @@ int main(int argc, char *argv[]) {
 
   char command[MAX_SIZE];
   while(1)
-  {printf("$ ");
+  {
+    printf("$ ");
   
-  fgets(command, sizeof(command), stdin);
-  command[strcspn(command, "\n")] = '\0';
+    fgets(command, sizeof(command), stdin);
+    command[strcspn(command, "\n")] = '\0';
 
-
-  printf("%s: command not found\n", command);
-}
+    if (strcmp(command, "exit")){
+      return 0;
+    }
+    printf("%s: command not found\n", command);
+  }
 
   return 0;
 }
