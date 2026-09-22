@@ -30,8 +30,7 @@ int main(int argc, char *argv[]) {
       break;
     }
     if (strcmp(command, "echo") == 0){
-      char *text = strchr(input, ' ');
-      printf("%s\n", *(text + 1));
+      print("%s\n", input + 5);
     }
     printf("%s: input not found\n", input);
   }
