@@ -33,7 +33,7 @@ int main(int argc, char *argv[]) {
       printf("%s\n", input + 5);
       continue;
     }
-    printf("%s: input not found\n", input);
+    printf("%s: command not found\n", input);
   }
 
   return 0;
