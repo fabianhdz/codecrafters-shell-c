@@ -19,6 +19,9 @@ int main(int argc, char *argv[]) {
     char* builtin = strtok(input, " ");
     char* arg = strtok(NULL, "");
 
+    if (builtin == NULL){
+      continue;
+    }
 
     
     if (strcmp(builtin, "exit") == 0){
@@ -28,7 +31,7 @@ int main(int argc, char *argv[]) {
       printf("%s\n", input + 5);
     }
     else if (strcmp(builtin, "type") == 0){
-      if(strcmp(arg, "echo") == 0 || strcmp(arg, "exit") == 0
+      if(arg != NULL && strcmp(arg, "echo") == 0 || strcmp(arg, "exit") == 0
           || strcmp(arg, "type") == 0){
             printf("%s is a shell builtin\n", arg);
       }
