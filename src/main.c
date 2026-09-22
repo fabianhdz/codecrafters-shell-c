@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define MAX_SIZE 4096
+#define MAX_SIZE 1024
 
 int main(int argc, char *argv[]) {
   // Flush after every printf
@@ -9,13 +9,10 @@ int main(int argc, char *argv[]) {
 
   // TODO: Uncomment the code below to pass the first stage
   printf("$ ");
-  char input[MAX_SIZE];
-
-  if(scanf("%s", input) != 1){
-    printf("Invalid input");
-  }
-
-  printf("%s: command not found");
+  char command[MAX_SIZE];
+  fgets(command, sizeof(command), stdin);
+  
+  printf("%s: command not found", command);
 
   return 0;
 }
