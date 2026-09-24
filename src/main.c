@@ -93,7 +93,6 @@ int main(int argc, char *argv[]) {
       char* arg_state;
       char* token = strtok_r(arg, " ", &arg_state);
       while (token != NULL && count < MAX_ARGS -1){
-        printf("arg: %s", token);
           args[count] = token;
           count++;
 
