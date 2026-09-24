@@ -59,7 +59,7 @@ int main(int argc, char *argv[]) {
     else if(strcmp(command, "pwd") == 0){
       char cwd[PATH_MAX];
       if (getcwd(cwd, sizeof(cwd)) != NULL){
-        printf("%s", cwd);
+        printf("%s\n", cwd);
       }
     }
     //Execute command if it exists
