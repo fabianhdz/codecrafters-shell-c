@@ -100,7 +100,19 @@ int main(int argc, char *argv[]) {
       }
       args[count] = NULL;
 
-      execv(path, args);
+      //Fork the program
+      pid_t pid;
+      pid = fork();
+      switch(pid){
+        case -1:
+          perror("fork");
+          continue;
+        case 0:
+          continue;
+        default:
+          execv(path, args);
+
+      }
     }
     else{
       printf("%s: command not found\n", command);
