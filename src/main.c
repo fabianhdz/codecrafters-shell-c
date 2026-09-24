@@ -90,7 +90,7 @@ int main(int argc, char *argv[]) {
       char* args[MAX_ARGS];
       args[0] = command;
       int count = 1;
-      printf("Hello there");
+      
       arg = strtok_r(NULL, " ", &input_state);
       while (arg != NULL && count < MAX_ARGS){
         printf("arg: %s", arg);
