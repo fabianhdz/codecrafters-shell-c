@@ -91,7 +91,7 @@ int main(int argc, char *argv[]) {
       args[0] = command;
       int count = 1;
       char* arg_state;
-      char* token = strtok_r(NULL, " ", &arg_state);
+      char* token = strtok_r(arg, " ", &arg_state);
       while (token != NULL && count < MAX_ARGS -1){
         printf("arg: %s", token);
           args[count] = token;
