@@ -4,6 +4,7 @@
 #include <ctype.h>
 #include <limits.h>
 #include <unistd.h>
+#include <sys/wait.h>
 
 #define MAX_SIZE 1024
 #define MAX_ARGS 128
@@ -108,9 +109,9 @@ int main(int argc, char *argv[]) {
           perror("fork");
           continue;
         case 0:
-          continue;
-        default:
           execv(path, args);
+        default:
+          continue;
 
       }
     }
