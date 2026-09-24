@@ -52,7 +52,14 @@ int main(int argc, char *argv[]) {
           printf("%s: not found\n", arg);
         }
       }
-    } //Execute command if it exists
+    } 
+    else if(strcmp(command, "pwd") == 0){
+      char cwd[PATH_MAX];
+      if (getcwd(cwd, sizeof(cwd)) != NULL){
+        printf("%s", cwd);
+      }
+    }
+    //Execute command if it exists
     else if(find_path(command, path, sizeof(path)) == 0){
       char* args[MAX_ARGS];
       args[0] = command;
