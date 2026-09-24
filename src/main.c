@@ -110,7 +110,10 @@ int main(int argc, char *argv[]) {
           continue;
         case 0:
           execv(path, args);
+          perror("execv");
+          _exit(EXIT_FAILURE);
         default:
+          waitpid(pid, NULL, 0);
           continue;
 
       }
