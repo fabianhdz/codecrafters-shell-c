@@ -92,6 +92,7 @@ int main(int argc, char *argv[]) {
       int count = 1;
       arg = strtok_r(NULL, " ", &input_state);
       while (arg != NULL && count < MAX_ARGS){
+        print("arg: %s", arg);
           args[count] = arg;
           count++;
 
