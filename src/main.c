@@ -40,8 +40,11 @@ int main(int argc, char *argv[]) {
     }
     else if (strcmp(command, "type") == 0){
       // Builtin types
-      if(arg != NULL && strcmp(arg, "echo") == 0 
-        || strcmp(arg, "exit") == 0 || strcmp(arg, "type") == 0){
+      if(arg != NULL &&
+           strcmp(arg, "echo") == 0 
+        || strcmp(arg, "exit") == 0
+        || strcmp(arg, "type") == 0
+        || strcmp(arg, "pwd")  == 0){
             printf("%s is a shell builtin\n", arg);
       }
       else{ //Executable types
