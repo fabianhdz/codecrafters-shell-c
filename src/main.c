@@ -87,7 +87,8 @@ int main(int argc, char *argv[]) {
       }
     } //Execute command if it exists
     else if(find_path(command, path, sizeof(path)) == 0){
-      char* args[MAX_ARGS] = {command};
+      char* args[MAX_ARGS];
+      args[0] = command;
       int count = 1;
       arg = strtok_r(NULL, " ", &input_state);
       while (arg != NULL && count < MAX_ARGS){
