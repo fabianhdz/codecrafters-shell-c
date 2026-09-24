@@ -10,40 +10,7 @@
 #define MAX_ARGS 128
 
 
-int find_path(const char* file_name, char* result, size_t result_size){
-  
-  char* path_env = getenv("PATH");
-  if(!path_env){
-    return -1;
-  }
-  // Duplicate paths so we avoid modifying original path
-  char* path = strdup(path_env);
-  if (!path){
-    return -1;
-  }
-  // Get individual path
-  char* dir = strtok(path, ":");
-
-  while (dir != NULL){
-   
-    char candidate[PATH_MAX];
-    //Attach file name to the directory path
-    snprintf(candidate, sizeof(candidate), "%s/%s", dir, file_name);
-
-    // Check that the file exists and is executable
-    if (access(candidate, X_OK) == 0){
-      snprintf(result, result_size, "%s", candidate);
-      free(path);
-      return 0;
-    }
-
-    dir = strtok(NULL, ":");
-  }
-
-  free(path);
-  return -1;
-
-}
+int find_path(const char* file_name, char* result, size_t result_size);
 
 int main(int argc, char *argv[]) {
   // Flush after every printf
@@ -65,7 +32,6 @@ int main(int argc, char *argv[]) {
       continue;
     }
 
-    
     if (strcmp(command, "exit") == 0){
       break;
     }
@@ -124,4 +90,41 @@ int main(int argc, char *argv[]) {
   }
 
   return 0;
+}
+
+
+
+int find_path(const char* file_name, char* result, size_t result_size){
+  
+  char* path_env = getenv("PATH");
+  if(!path_env){
+    return -1;
+  }
+  // Duplicate paths so we avoid modifying original path
+  char* path = strdup(path_env);
+  if (!path){
+    return -1;
+  }
+  // Get individual path
+  char* dir = strtok(path, ":");
+
+  while (dir != NULL){
+   
+    char candidate[PATH_MAX];
+    //Attach file name to the directory path
+    snprintf(candidate, sizeof(candidate), "%s/%s", dir, file_name);
+
+    // Check that the file exists and is executable
+    if (access(candidate, X_OK) == 0){
+      snprintf(result, result_size, "%s", candidate);
+      free(path);
+      return 0;
+    }
+
+    dir = strtok(NULL, ":");
+  }
+
+  free(path);
+  return -1;
+
 }
