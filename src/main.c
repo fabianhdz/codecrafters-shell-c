@@ -90,18 +90,18 @@ int main(int argc, char *argv[]) {
       char* args[MAX_ARGS];
       args[0] = command;
       int count = 1;
-      
-      arg = strtok_r(NULL, " ", &input_state);
-      while (arg != NULL && count < MAX_ARGS){
-        printf("arg: %s", arg);
-          args[count] = arg;
+      char* arg_state;
+      char* token = strtok_r(NULL, " ", &arg_state);
+      while (token != NULL && count < MAX_ARGS -1){
+        printf("arg: %s", token);
+          args[count] = token;
           count++;
 
-          arg = strtok_r(NULL, " ", &input_state);
+          token = strtok_r(NULL, " ", &arg_state);
       }
       args[count] = NULL;
 
-      execvp(command, args);
+      execv(path, args);
     }
     else{
       printf("%s: command not found\n", command);
