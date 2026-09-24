@@ -76,7 +76,7 @@ int main(int argc, char *argv[]) {
       else{
         char path[PATH_MAX];
         if(find_path(arg, path, sizeof(path)) == 0){
-          printf("%s is %s", arg, path);
+          printf("%s is %s\n", arg, path);
         }
         else{
           printf("%s: not found\n", arg);
