@@ -26,7 +26,7 @@ int find_path(const char* file_name, char* result, size_t result_size){
    
     char candidate[PATH_MAX];
     //Attach file name to the directory path
-    snprintf(candidate, sizeof(candidate), "%s%s", dir, file_name);
+    snprintf(candidate, sizeof(candidate), "%s/%s", dir, file_name);
 
     // Check that the file exists and is executable
     if (access(candidate, X_OK) == 0){
@@ -37,7 +37,7 @@ int find_path(const char* file_name, char* result, size_t result_size){
 
     dir = strtok(NULL, ":");
   }
-  
+
   free(path);
   return -1;
 
