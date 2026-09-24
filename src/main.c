@@ -6,6 +6,7 @@
 #include <unistd.h>
 
 #define MAX_SIZE 1024
+#define MAX_ARGS 128
 
 
 int find_path(const char* file_name, char* result, size_t result_size){
@@ -54,8 +55,10 @@ int main(int argc, char *argv[]) {
     
     fgets(input, sizeof(input), stdin);
     input[strcspn(input, "\n")] = '\0';
-    char* command = strtok(input, " ");
-    char* arg = strtok(NULL, "");
+    char *input_state;
+    char* command = strtok_r(input, " ", &input_state);
+    char* arg = strtok_r(NULL, "", &input_state);
+    char path[PATH_MAX];
 
     if (command == NULL){
       continue;
@@ -69,13 +72,12 @@ int main(int argc, char *argv[]) {
       printf("%s\n", arg);
     }
     else if (strcmp(command, "type") == 0){
-
+      // Builtin types
       if(arg != NULL && strcmp(arg, "echo") == 0 
         || strcmp(arg, "exit") == 0 || strcmp(arg, "type") == 0){
             printf("%s is a shell builtin\n", arg);
       }
-      else{
-        char path[PATH_MAX];
+      else{ //Executable types
         if(arg != NULL && find_path(arg, path, sizeof(path)) == 0){
           printf("%s is %s\n", arg, path);
         }
@@ -83,6 +85,20 @@ int main(int argc, char *argv[]) {
           printf("%s: not found\n", arg);
         }
       }
+    } //Execute command if it exists
+    else if(find_path(command, path, sizeof(path)) == 0){
+      char* args[MAX_ARGS] = {command};
+      int count = 1;
+      arg = strtok_r(NULL, " ", &input_state);
+      while (arg != NULL && count < MAX_ARGS){
+          args[count] = arg;
+          count++;
+
+          arg = strtok_r(NULL, " ", &input_state);
+      }
+      args[count] = NULL;
+
+      execvp(command, args);
     }
     else{
       printf("%s: command not found\n", command);
