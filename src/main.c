@@ -51,7 +51,7 @@ int main(int argc, char *argv[]) {
   while(1){
 
     printf("$ ");
-  
+    
     fgets(input, sizeof(input), stdin);
     input[strcspn(input, "\n")] = '\0';
     char* command = strtok(input, " ");
@@ -69,13 +69,14 @@ int main(int argc, char *argv[]) {
       printf("%s\n", input + 5);
     }
     else if (strcmp(command, "type") == 0){
-      if(arg != NULL && strcmp(arg, "echo") == 0 || strcmp(arg, "exit") == 0
-          || strcmp(arg, "type") == 0){
+
+      if(arg != NULL && strcmp(arg, "echo") == 0 
+        || strcmp(arg, "exit") == 0 || strcmp(arg, "type") == 0){
             printf("%s is a shell builtin\n", arg);
       }
       else{
         char path[PATH_MAX];
-        if(find_path(arg, path, sizeof(path)) == 0){
+        if(arg != NULL && find_path(arg, path, sizeof(path)) == 0){
           printf("%s is %s\n", arg, path);
         }
         else{
