@@ -62,7 +62,7 @@ int main(int argc, char* argv[]) {
             if (access(arg, F_OK) == 0) {
                 chdir(arg);
             } else {
-                printf("cd: %s: No such file or directory", arg);
+                printf("cd: %s: No such file or directory\n", arg);
             }
         } else if (find_path(command, path, sizeof(path)) == 0) { /* Execute command  if it exists*/
             char* args[MAX_ARGS];
@@ -93,7 +93,7 @@ int main(int argc, char* argv[]) {
                     continue;
             }
         } else {
-                printf("%s: command not found\n", command);
+            printf("%s: command not found\n", command);
         }
     }
 
