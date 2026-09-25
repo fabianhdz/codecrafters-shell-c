@@ -44,7 +44,8 @@ int main(int argc, char* argv[]) {
                 strcmp(arg, "echo") == 0 ||
                 strcmp(arg, "exit") == 0 ||
                 strcmp(arg, "type") == 0 ||
-                strcmp(arg, "pwd") == 0) {
+                strcmp(arg, "pwd") == 0  ||
+                strcmp(arg, "cd") == 0) {
                     printf("%s is a shell builtin\n", arg);
           } else { /* Executable types */
                 if (arg != NULL && find_path(arg, path, sizeof(path)) == 0) {
