@@ -10,7 +10,7 @@
 #define MAX_ARGS 128
 
 int find_path(const char* file_name, char* result, size_t result_size);
-int is_dir(const char* path, size_t size);
+
 
 int main(int argc, char* argv[]) {
     /* Flush after every printf */
@@ -41,11 +41,11 @@ int main(int argc, char* argv[]) {
         } else if (strcmp(command, "type") == 0) {
             /* Builtin types */
             if (arg != NULL &&
-              strcmp(arg, "echo") == 0 ||
-              strcmp(arg, "exit") == 0 ||
-              strcmp(arg, "type") == 0 ||
-              strcmp(arg, "pwd") == 0) {
-              printf("%s is a shell builtin\n", arg);
+                strcmp(arg, "echo") == 0 ||
+                strcmp(arg, "exit") == 0 ||
+                strcmp(arg, "type") == 0 ||
+                strcmp(arg, "pwd") == 0) {
+                    printf("%s is a shell builtin\n", arg);
           } else { /* Executable types */
                 if (arg != NULL && find_path(arg, path, sizeof(path)) == 0) {
                     printf("%s is %s\n", arg, path);
@@ -54,15 +54,17 @@ int main(int argc, char* argv[]) {
                 }
             }
         } else if (strcmp(command, "pwd") == 0) {
-              char cwd[PATH_MAX];
+            char cwd[PATH_MAX];
             if (getcwd(cwd, sizeof(cwd)) != NULL) {
                 printf("%s\n", cwd);
             }
         } else if (strcmp(command, "cd") == 0) {
-              //TODO
-        }
-        /* Execute command if it exists */
-        else if (find_path(command, path, sizeof(path)) == 0) {
+            if (access(arg, F_OK) == 0) {
+                chdir(arg);
+            } else {
+                printf("cd: %s: No such file or directory", arg);
+            }
+        } else if (find_path(command, path, sizeof(path)) == 0) { /* Execute command  if it exists*/
             char* args[MAX_ARGS];
             args[0] = command;
             int count = 1;
@@ -80,18 +82,18 @@ int main(int argc, char* argv[]) {
             pid_t pid = fork();
             switch (pid) {
               case -1:
-                  perror("fork");
-                  continue;
+                    perror("fork");
+                    continue;
               case 0:
-                  execv(path, args);
-                  perror("execv");
-                  _exit(EXIT_FAILURE);
+                    execv(path, args);
+                    perror("execv");
+                    _exit(EXIT_FAILURE);
               default:
-                  waitpid(pid, NULL, 0);
-                  continue;
+                    waitpid(pid, NULL, 0);
+                    continue;
             }
         } else {
-              printf("%s: command not found\n", command);
+                printf("%s: command not found\n", command);
         }
     }
 
@@ -130,9 +132,5 @@ int find_path(const char* file_name, char* result, size_t result_size) {
 
     free(path);
     return -1;
-
-}
-
-int is_dir(const char* path, size_t size){
 
 }
