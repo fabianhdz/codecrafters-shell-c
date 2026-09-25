@@ -10,6 +10,7 @@
 #define MAX_ARGS 128
 
 int find_path(const char* file_name, char* result, size_t result_size);
+int find_cd(const char* arg);
 
 
 int main(int argc, char* argv[]) {
@@ -60,6 +61,21 @@ int main(int argc, char* argv[]) {
                 printf("%s\n", cwd);
             }
         } else if (strcmp(command, "cd") == 0) {
+            if (arg[0] == '~') {
+                char* home_env = getenv("HOME");
+                if (home_env == NULL){
+                    _exit(EXIT_FAILURE);
+                }
+                char* home = strdup(home_env);
+
+                if (strcmp(arg, "~")) {
+                    chdir(home);
+                }
+                snprintf(path, PATH_MAX, "%s/%s", home, arg + 2);
+                chdir(path);
+                free(home);
+                continue;
+            }
             if (access(arg, F_OK) == 0) {
                 chdir(arg);
             } else {
@@ -135,3 +151,4 @@ int find_path(const char* file_name, char* result, size_t result_size) {
     return -1;
 
 }
+
